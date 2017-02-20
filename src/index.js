@@ -1,14 +1,15 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import YTSearch from 'youtube-api-search';
-import SearchBar from './components/search_bar.js';
-import VideoList from './components/video_list.js';
-import VideoDetail from './components/video_detail.js';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxPromise from 'redux-promise';
 
-const API_KEY = 'AIzaSyDQN1X3SZb6R9fxo2FUzLnywq7aF-oEe3E';
+import App from './components/app';
+import reducers from './reducers'
 
-class App extends Component {
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+
+class App2 extends Component {
   constructor(props){
     super(props);
 
@@ -48,4 +49,8 @@ class App extends Component {
 
 
 
-ReactDOM.render(<App />, document.querySelector('.container'));
+ReactDOM.render(
+    <Provider store={createStoreWithMiddleware(reducers)} >
+        <App />
+    </Provider>
+    , document.querySelector('.container'));
